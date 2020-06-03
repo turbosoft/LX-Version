@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pgm">
+
+	<select id="getLayerTableName" parameterType="paramMap" resultType="String">
+		select tablename from pg_tables where tablename like '%\_' || ${projectId}
+	</select>
+	
+	<select id="selectLayerTableColumns" parameterType="paramMap" resultType="resultMap">
+		select
+			column_name as attr,
+			data_type as type
+		from information_schema.columns where table_name = '${tableName}'
+	</select>
+	<select id="selectLayerUserColumns" parameterType="paramMap" resultType="resultMap">
+		select 
+			f_mgeometry_column as attr, 
+			type 
+		from 
+			mgeometry_columns 
+		where 
+			f_table_name = '${tableName}'
+	</select>
+	<select id="getLayerColName" parameterType="paramMap" resultType="String">
+		select 
+			f_mgeometry_column
+		from 
+			mgeometry_columns 
+		where 
+			f_table_name like '%\_' || ${projectId}
+	</select>
+	<select id="selectProjectRowList" parameterType="paramMap" resultType="resultMap">
+		SELECT
+		    	 ID
+		    	,TITLE
+		    	,CONTENT
+		    	,(select filename from geocms_content_child where parentidx = GEOCMS_VIDEO_CONTENT.idx order by idx limit 1) FILENAME
+		    	,TO_CHAR(UDATE,'YYYY-mm-dd') R_DATE
+		    	,RDATE
+		    	,TO_CHAR(UDATE,'YYYY-mm-dd') U_DATE
+		    	,UDATE
+		    	,IDX
+		    	,LATITUDE
+		    	,LONGITUDE
+		    	,THUMBNAIL
+		    	,XMLDATA
+		    	,(select originname from geocms_content_child where parentidx = GEOCMS_VIDEO_CONTENT.idx order by idx limit 1) ORIGINNAME
+		    	,PROJECTIDX
+		    	,'GeoVideo' AS DATAKIND
+		    	,SHARETYPE
+		    	,(SELECT id FROM GEOCMS_PROJECT_CONTENT WHERE GEOCMS_PROJECT_CONTENT.idx = GEOCMS_VIDEO_CONTENT.projectIdx) projectUserId
+		    	,SEQNUM
+		    	,DRONETYPE
+		    	,(SELECT STATUS FROM GEOCMS_LOG WHERE contentType = 'GeoVideo' AND contentIdx = cast(GEOCMS_VIDEO_CONTENT.IDX as text)) STATUS
+		    	,GPSDATA
+		    FROM
+		    	GEOCMS_VIDEO_CONTENT
+		    WHERE 
+		    	1=1
+		    	AND projectIdx = ${projectIdx}
+		    	AND SEQNUM = ${rowNum}
+	</select>
+	
+	<select id="selectLayerTableAttrs" parameterType="paramMap" resultType="resultMap">
+		select
+			column_name
+		from information_schema.columns where table_name = '${tableName}'
+	</select>
+	<select id="selectAllLayer" resultType="resultMap">
+		select
+			projectname
+		from geocms_project_content
+	</select>
+	
+	<select id="getMgeometryColumns" parameterType="paramMap" resultType="resultMap">
+		select
+			f_segtableoid as id,
+			f_mgeometry_segtable_name as table_name
+		from
+			mgeometry_columns
+		where
+			f_table_name = '${tableName}'
+			<if test="columnType != null and !columnType.equalsIgnoreCase('')">
+				and type = '${columnType}'
+			</if>
+			
+	</select>
+	<select id="tableviewDataList" parameterType="paramMap" resultType="resultMap">
+		SELECT
+			BB.*
+		FROM
+			${tableName} BB
+	</select>
+
+<!-- 	<select id="tableviewDataList" parameterType="paramMap" resultType="resultMap">
+		SELECT
+			BB.*
+		FROM
+			(SELECT
+				ROW_NUMBER() OVER() AS RN,
+				COUNT(*) OVER() AS TOTAL,
+				AA.*
+			FROM
+				(SELECT * FROM
+						(SELECT
+							id
+							,trajnumber
+						FROM
+							trajtest tr
+					) CC
+				) AA
+			)BB
+	</select> -->
+	<delete id="tableRowDelete">
+    	DELETE
+    		FROM
+    			${tableName}
+    		WHERE
+    			1 = 1
+    		AND
+    			idxseq = ${rowIdx}
+    </delete>
+    
+     <update id="updateVideoData" parameterType="paramMap">
+    	UPDATE
+    		GEOCMS_VIDEO_CONTENT
+    	SET
+    		  UDATE			=  NOW()
+    		<if test="latitude != null and latitude != ''">
+    			,LATITUDE		=  ${latitude}
+    		</if>
+    		<if test="longitude != null and longitude != ''">
+    			,LONGITUDE		=  ${longitude}
+    		</if>
+    		<if test="gpsData != null and gpsData != ''">
+    			,GPSDATA		=  '${gpsData}'
+    		</if>
+    		<if test="fileName != null and fileName != ''">
+    			,filename		=  '${fileName}'
+    		</if>
+    	WHERE 
+    		1 = 1
+    	AND
+    		IDX = ${idx}
+    </update>
+     <update id="updateTraj" parameterType="paramMap">
+    	UPDATE
+    		GEOCMS_TRAJ_CONTENT
+    	SET
+    		  UDATE			=  NOW()
+    		<if test="latitude != null and latitude != ''">
+    			,LATITUDE		=  ${latitude}
+    		</if>
+    		<if test="longitude != null and longitude != ''">
+    			,LONGITUDE		=  ${longitude}
+    		</if>
+    		<if test="gpsData != null and gpsData != ''">
+    			,GPSDATA		=  '${gpsData}'
+    		</if>
+    		<if test="fileName != null and fileName != ''">
+    			,filename		=  '${fileName}'
+    		</if>
+    	WHERE 
+    		1 = 1
+    	AND
+    		IDX = ${idx}
+    </update>
+     <update id="updateSensor" parameterType="paramMap">
+    	UPDATE
+    		GEOCMS_SENSOR_CONTENT
+    	SET
+    		  UDATE			=  NOW()
+    		<if test="latitude != null and latitude != ''">
+    			,LATITUDE		=  ${latitude}
+    		</if>
+    		<if test="longitude != null and longitude != ''">
+    			,LONGITUDE		=  ${longitude}
+    		</if>
+    		<if test="gpsData != null and gpsData != ''">
+    			,GPSDATA		=  '${gpsData}'
+    		</if>
+    	WHERE 
+    		1 = 1
+    	AND
+    		IDX = ${idx}
+    </update>
+	
+</mapper>

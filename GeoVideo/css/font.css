@@ -1,0 +1,24 @@
+@CHARSET "UTF-8";
+
+/* font */
+@font-face {
+	font-family: 'noto_r';
+	src: url("../font/NotoSansCJKkr-Regular.otf"),
+		 url("../font/NotoSansCJKkr-Regular.otf") format('otf'),
+		 url("../font/NotoSansCJKkr-Regular.otf") format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'noto_b';
+	src: url("../font/NotoSansCJKkr-Bold.otf"),
+		 url("../font/NotoSansCJKkr-Bold.otf") format('otf'),
+		 url("../font/NotoSansCJKkr-Bold.otf") format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+* {
+	font-family: 'noto_r';
+}

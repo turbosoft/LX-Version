@@ -1,0 +1,198 @@
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+label, div, input{
+    font-family: "Jeju Gothic", serif !important;
+    font-size: 12px;
+}
+button{
+    font-family: "Jeju Gothic", serif !important;
+    color: #000;
+    font-size: 12px;
+    outline: 0;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+}
+input{
+    border: unset;
+    background-color: transparent;
+    outline: none;
+}
+ul{
+    list-style: none;
+}
+
+/* header */
+.navbar-header{
+    width: 100%;
+    height: 50px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 255);
+}
+.navbar-header label{
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+}
+.navbar-header img{
+    float: right;
+    width: 130px;
+}
+
+/* header */
+
+.top-header{
+    float:left;
+}
+.row-btn{
+    border-radius: 3px;
+    border: 1px solid #444;
+    box-shadow: 0 0 10px 1px #000;
+    cursor: pointer;
+    background-color: #000;
+    color: #FFF;
+    text-align: center;
+    padding: 5px;
+    font-weight: bold;
+    margin-left: 10px;
+    width: 140px;
+    float: left;
+    font-size: 13px;
+    height: 30px;
+    margin-top: -6px;
+}
+
+/* container */
+.container{
+    position: absolute;
+    margin-top: 15px;
+}
+.container .row{
+    width: 330px;
+    border-radius: 3px;
+    border: 1px solid #444;
+    margin-bottom: 5px;
+    box-shadow: 0 0 10px 1px #000;
+}
+.container .row .row-header{
+    background-color: #000;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.container .row .row-header:hover{
+    background-color: rgba(38, 38, 38, 0.95);
+}
+.container .row .row-content{
+    display: none;
+    background-color: rgba(38, 38, 38, 0.95);
+    padding: 10px 13px;
+    overflow-y: auto;
+    max-height: 600px;
+}
+
+/* 통합검색 */
+.searh-input{
+    background-color: #1b1c1d;
+    padding: 7px 0px 7px 20px;
+    border-radius: 50px;
+    margin: 13px 0px;
+}
+.searh-input input{
+    width: 85%;
+}
+.search-totalLabel{
+    font-size: 10px;
+    margin-left: 10px;
+}
+.search-table{
+    display: block;
+    border-radius: 5px;
+    background: #333;
+    border: none;
+    border-spacing: 0;
+    margin: 5px 0px;
+    font-size: 11px;
+}
+.search-table tbody, .search-table tr, .search-table td{
+    display: inherit;
+}
+.search-table td{
+    padding: 8px;
+    border-top: 1px solid;
+    border-color: rgba(255,255,255,.1);
+}
+.search-table tr:first-child td{
+    border-top: none;
+}
+.search-table tr:hover{
+    background-color: #454545;
+}
+.pagination{
+    font-size: 13px;
+    padding: 0;
+    text-align: center;
+}
+.pagination li{
+    display: inline-block;
+    margin: 0px 5px;
+    color: #b6b6b6;
+}
+.pagination li.active{
+    color: #fff;
+    font-weight: bold;
+}
+
+/* 레이어 */
+.item ul{
+    padding-left: 25px;
+    margin: 0px;
+}
+.item span{
+    cursor: pointer;
+}
+.item input[type="checkbox"]{
+    display: none;
+}
+.item i.icon.eye{
+    float: right;
+}
+
+/* 즐겨찾기 */
+.bookmark-input input{
+    width: 150px;
+    background-color: #1b1c1d;
+    border-radius: 50px;
+    padding: 5px 15px;
+}
+.bookmark-input button{
+    float: right;
+    padding: 5px 10px;
+}
+.bookmark-list{
+    padding-left: 10px;
+}
+.bookmark-list button{
+    float: right;
+    margin-left: 5px;
+}
+.bookmark-list a{
+    color: #fff;
+    font-size: 11px;
+}
+
+/* 우측속성팝업 */
+
+/* icon */
+i.icon{
+    cursor: pointer;
+}
+i.icon.eye.slash{
+    color: #808080;
+}
